@@ -13,6 +13,8 @@ namespace BookShop.Presentation.Controllers
         public BookController(IBookService bookService)
         {
             _bookService = bookService;
+
+
         }
         [HttpPost("Add")]
         public async Task<IActionResult> Add(BookRequestDTO added)

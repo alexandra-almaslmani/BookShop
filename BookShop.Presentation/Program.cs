@@ -7,6 +7,7 @@ using BookShop.Persistence.Mappers;
 using BookShop.Services.Contract;
 using BookShop.Services.Implementations;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookShop.Presentation
@@ -25,6 +26,11 @@ namespace BookShop.Presentation
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddAuthorization();
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
             builder.Services.AddScoped<IBookService, BookService>();
@@ -41,6 +47,8 @@ namespace BookShop.Presentation
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.MapIdentityApi<IdentityUser>();
             app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
 
