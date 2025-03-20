@@ -17,5 +17,6 @@ namespace BookShop.Persistence.Entities
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
         public int MyProperty { get; set; }
+
     }
 }
